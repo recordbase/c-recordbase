@@ -157,5 +157,7 @@ func (t *GetBuilder) doToEntry(ctx context.Context) (*Entry, error) {
 
 }
 
-
+func Sum(a, b int) int {
+	return a + b
+}
 
