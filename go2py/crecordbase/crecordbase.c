@@ -2128,33 +2128,6 @@ PyObject * _wrap__crecordbase_Map_string_string_keys(PyObject * PYBINDGEN_UNUSED
 
 
 PyObject *
-_wrap__crecordbase_crecordbase_Get(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
-{
-    PyObject *py_retval;
-    int64_t retval;
-    int64_t instance;
-    char *tenant;
-    char *key;
-    bool fileContents;
-    PyObject *py_fileContents;
-    int64_t timeoutMillis;
-    const char *keywords[] = {"instance", "tenant", "key", "fileContents", "timeoutMillis", NULL};
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "LssOL", (char **) keywords, &instance, &tenant, &key, &py_fileContents, &timeoutMillis)) {
-        return NULL;
-    }
-    fileContents = (bool) PyObject_IsTrue(py_fileContents);
-    retval = crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis);
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-    py_retval = Py_BuildValue((char *) "L", retval);
-    return py_retval;
-}
-PyObject * _wrap__crecordbase_crecordbase_Get(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
-
-
-PyObject *
 _wrap__crecordbase_crecordbase_Close(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
 {
     PyObject *py_retval;
@@ -2199,6 +2172,33 @@ _wrap__crecordbase_crecordbase_Connect(PyObject * PYBINDGEN_UNUSED(dummy), PyObj
     return py_retval;
 }
 PyObject * _wrap__crecordbase_crecordbase_Connect(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_crecordbase_Get(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int64_t retval;
+    int64_t instance;
+    char *tenant;
+    char *key;
+    bool fileContents;
+    PyObject *py_fileContents;
+    int64_t timeoutMillis;
+    const char *keywords[] = {"instance", "tenant", "key", "fileContents", "timeoutMillis", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "LssOL", (char **) keywords, &instance, &tenant, &key, &py_fileContents, &timeoutMillis)) {
+        return NULL;
+    }
+    fileContents = (bool) PyObject_IsTrue(py_fileContents);
+    retval = crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis);
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+    py_retval = Py_BuildValue((char *) "L", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_crecordbase_Get(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
 
 static PyMethodDef _crecordbase_functions[] = {
     {(char *) "GoPyInit", (PyCFunction) _wrap__crecordbase_GoPyInit, METH_NOARGS, "GoPyInit()\n\n" },
@@ -2314,9 +2314,9 @@ static PyMethodDef _crecordbase_functions[] = {
     {(char *) "Map_string_string_set", (PyCFunction) _wrap__crecordbase_Map_string_string_set, METH_KEYWORDS|METH_VARARGS, "Map_string_string_set(handle, key, value)\n\ntype: handle: int64_t\ntype: key: char *\ntype: value: char *" },
     {(char *) "Map_string_string_delete", (PyCFunction) _wrap__crecordbase_Map_string_string_delete, METH_KEYWORDS|METH_VARARGS, "Map_string_string_delete(handle, _ky)\n\ntype: handle: int64_t\ntype: _ky: char *" },
     {(char *) "Map_string_string_keys", (PyCFunction) _wrap__crecordbase_Map_string_string_keys, METH_KEYWORDS|METH_VARARGS, "Map_string_string_keys(handle)\n\ntype: handle: int64_t" },
-    {(char *) "crecordbase_Get", (PyCFunction) _wrap__crecordbase_crecordbase_Get, METH_KEYWORDS|METH_VARARGS, "crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis)\n\ntype: instance: int64_t\ntype: tenant: char *\ntype: key: char *\ntype: fileContents: bool\ntype: timeoutMillis: int64_t" },
     {(char *) "crecordbase_Close", (PyCFunction) _wrap__crecordbase_crecordbase_Close, METH_KEYWORDS|METH_VARARGS, "crecordbase_Close(instance)\n\ntype: instance: int64_t" },
     {(char *) "crecordbase_Connect", (PyCFunction) _wrap__crecordbase_crecordbase_Connect, METH_KEYWORDS|METH_VARARGS, "crecordbase_Connect(commaSeparatedEndpoints, token, withTls, timeoutMillis)\n\ntype: commaSeparatedEndpoints: char *\ntype: token: char *\ntype: withTls: bool\ntype: timeoutMillis: int64_t" },
+    {(char *) "crecordbase_Get", (PyCFunction) _wrap__crecordbase_crecordbase_Get, METH_KEYWORDS|METH_VARARGS, "crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis)\n\ntype: instance: int64_t\ntype: tenant: char *\ntype: key: char *\ntype: fileContents: bool\ntype: timeoutMillis: int64_t" },
     {NULL, NULL, 0, NULL}
 };
 #if PY_VERSION_HEX >= 0x03000000

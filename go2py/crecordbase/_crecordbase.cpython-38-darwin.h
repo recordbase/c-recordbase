@@ -268,9 +268,9 @@ extern char Map_string_string_contains(long long int handle, char* _ky);
 extern void Map_string_string_set(long long int handle, char* _ky, char* _vl);
 extern void Map_string_string_delete(long long int handle, char* _ky);
 extern long long int Map_string_string_keys(long long int handle);
-extern long long int crecordbase_Get(long long int instance, char* tenant, char* key, char fileContents, long long int timeoutMillis);
 extern char* crecordbase_Close(long long int instance);
 extern long long int crecordbase_Connect(char* commaSeparatedEndpoints, char* token, char withTls, long long int timeoutMillis);
+extern long long int crecordbase_Get(long long int instance, char* tenant, char* key, char fileContents, long long int timeoutMillis);
 
 #ifdef __cplusplus
 }

@@ -49,7 +49,7 @@ func Close(instance int) error {
 	return clientList.Remove(instance).Destroy()
 }
 
-func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int) (map[string]string, error) {
+func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int) map[string]interface{} {
 
 	clientDeadline := time.Now().Add(time.Duration(timeoutMillis) * time.Millisecond)
 	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
@@ -61,15 +61,15 @@ func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int)
 		FileContents: fileContents,
 	})
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
-	resp := make(map[string]string)
+	resp := make(map[string]interface{})
 	for _, col := range entry.Columns {
 		resp[col.Name] = string(col.Value)
 	}
 
-	return resp, nil
+	return resp
 }
 
 

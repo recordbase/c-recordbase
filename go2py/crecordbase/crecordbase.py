@@ -118,14 +118,14 @@ class Map_string_string(go.GoClass):
 
 
 # ---- Functions ---
-def Get(instance, tenant, key, fileContents, timeoutMillis):
-	"""Get(int instance, str tenant, str key, bool fileContents, int timeoutMillis) object, str"""
-	return Map_string_string(handle=_crecordbase.crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis))
 def Close(instance):
 	"""Close(int instance) str"""
 	return _crecordbase.crecordbase_Close(instance)
 def Connect(commaSeparatedEndpoints, token, withTls, timeoutMillis):
 	"""Connect(str commaSeparatedEndpoints, str token, bool withTls, int timeoutMillis) int, str"""
 	return _crecordbase.crecordbase_Connect(commaSeparatedEndpoints, token, withTls, timeoutMillis)
+def Get(instance, tenant, key, fileContents, timeoutMillis):
+	"""Get(int instance, str tenant, str key, bool fileContents, int timeoutMillis) object, str"""
+	return Map_string_string(handle=_crecordbase.crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis))
 
 

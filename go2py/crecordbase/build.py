@@ -154,9 +154,9 @@ mod.add_function('Map_string_string_contains', retval('bool'), [param('int64_t',
 mod.add_function('Map_string_string_set', None, [param('int64_t', 'handle'), param('char*', 'key'), param('char*', 'value')])
 mod.add_function('Map_string_string_delete', None, [param('int64_t', 'handle'), param('char*', '_ky')])
 mod.add_function('Map_string_string_keys', retval('int64_t'), [param('int64_t', 'handle')])
-add_checked_function(mod, 'crecordbase_Get', retval('int64_t'), [param('int64_t', 'instance'), param('char*', 'tenant'), param('char*', 'key'), param('bool', 'fileContents'), param('int64_t', 'timeoutMillis')])
 add_checked_function(mod, 'crecordbase_Close', retval('char*'), [param('int64_t', 'instance')])
 add_checked_function(mod, 'crecordbase_Connect', retval('int64_t'), [param('char*', 'commaSeparatedEndpoints'), param('char*', 'token'), param('bool', 'withTls'), param('int64_t', 'timeoutMillis')])
+add_checked_function(mod, 'crecordbase_Get', retval('int64_t'), [param('int64_t', 'instance'), param('char*', 'tenant'), param('char*', 'key'), param('bool', 'fileContents'), param('int64_t', 'timeoutMillis')])
 
 mod.generate(open('crecordbase.c', 'w'))
 

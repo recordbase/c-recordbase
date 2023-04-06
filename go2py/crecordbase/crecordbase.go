@@ -1167,21 +1167,6 @@ func Map_string_string_keys(handle CGoHandle) CGoHandle {
 
 // ---- Functions ---
 
-//export crecordbase_Get
-func crecordbase_Get(instance C.longlong, tenant *C.char, key *C.char, fileContents C.char, timeoutMillis C.longlong) CGoHandle {
-	_saved_thread := C.PyEval_SaveThread()
-	cret, __err := crecordbase.Get(int(instance), C.GoString(tenant), C.GoString(key), boolPyToGo(fileContents), int(timeoutMillis))
-
-	C.PyEval_RestoreThread(_saved_thread)
-	if __err != nil {
-		estr := C.CString(__err.Error())
-		C.PyErr_SetString(C.PyExc_RuntimeError, estr)
-		C.free(unsafe.Pointer(estr))
-		return handleFromPtr_Map_string_string(nil)
-	}
-	return handleFromPtr_Map_string_string(&cret)
-}
-
 //export crecordbase_Close
 func crecordbase_Close(instance C.longlong) *C.char {
 	_saved_thread := C.PyEval_SaveThread()
@@ -1210,4 +1195,19 @@ func crecordbase_Connect(commaSeparatedEndpoints *C.char, token *C.char, withTls
 		return C.longlong(0)
 	}
 	return C.longlong(cret)
+}
+
+//export crecordbase_Get
+func crecordbase_Get(instance C.longlong, tenant *C.char, key *C.char, fileContents C.char, timeoutMillis C.longlong) CGoHandle {
+	_saved_thread := C.PyEval_SaveThread()
+	cret, __err := crecordbase.Get(int(instance), C.GoString(tenant), C.GoString(key), boolPyToGo(fileContents), int(timeoutMillis))
+
+	C.PyEval_RestoreThread(_saved_thread)
+	if __err != nil {
+		estr := C.CString(__err.Error())
+		C.PyErr_SetString(C.PyExc_RuntimeError, estr)
+		C.free(unsafe.Pointer(estr))
+		return handleFromPtr_Map_string_string(nil)
+	}
+	return handleFromPtr_Map_string_string(&cret)
 }
