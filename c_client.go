@@ -23,52 +23,127 @@ import (
 	"time"
 )
 
-var clientList  recordbase.ClientList
+type Instance struct {
+	Client  recordbase.Client
+}
 
-func Connect(commaSeparatedEndpoints, token string, withTls bool, timeoutMillis int) (int, error) {
-	clientDeadline := time.Now().Add(time.Duration(timeoutMillis) * time.Millisecond)
-	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
-	defer cancel()
+func (t *Instance) Get(tenant, primaryKey string) *GetBuilder {
+	return &GetBuilder {
+		Instance: t,
+		Request:  &recordpb.GetRequest {
+			Tenant: tenant,
+			PrimaryKey: primaryKey,
+		},
+	}
+}
+
+func (t *Instance) Close() {
+	t.Client.Destroy()
+}
+
+type InstanceBuilder struct {
+	Endpoint string
+	AuthToken string
+	UseTls bool
+	TimeoutMillis int
+}
+
+func (t *InstanceBuilder) Token(token string) *InstanceBuilder {
+	t.AuthToken = token
+	return t
+}
+
+func (t *InstanceBuilder) Tls(tls bool) *InstanceBuilder {
+	t.UseTls = tls
+	return t
+}
+
+func (t *InstanceBuilder) Timeout(timeoutMillis int) *InstanceBuilder {
+	t.TimeoutMillis = timeoutMillis
+	return t
+}
+
+func (t *InstanceBuilder) Connect() (*Instance, error) {
+
+	if t.TimeoutMillis > 0 {
+		clientDeadline := time.Now().Add(time.Duration(t.TimeoutMillis) * time.Millisecond)
+		ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
+		defer cancel()
+
+		return t.doConnect(ctx)
+	} else {
+		return t.doConnect(context.Background())
+	}
+
+}
+
+func (t *InstanceBuilder) doConnect(ctx context.Context) (*Instance, error) {
 
 	var tlsConfig *tls.Config
-	if withTls {
+	if t.UseTls {
 		tlsConfig = &tls.Config{
 			InsecureSkipVerify: true,
 			Rand:               rand.Reader,
 		}
 	}
 
-	client, err := recordbase.NewClient(ctx, commaSeparatedEndpoints, token, tlsConfig)
+	client, err :=  recordbase.NewClient(ctx, t.Endpoint, t.AuthToken, tlsConfig)
 	if err != nil {
-		return -1, err
+		return nil, err
 	}
-	return clientList.Add(client), nil
+
+	return &Instance {
+		Client: client,
+	}, nil
 }
 
-func Close(instance int) error {
-	return clientList.Remove(instance).Destroy()
+func New(commaSeparatedEndpoints string) *InstanceBuilder {
+	return &InstanceBuilder {
+		Endpoint: commaSeparatedEndpoints,
+	}
 }
 
 type Entry struct {
-	Err      error
 	Columns  map[string][]byte
 }
 
-func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int) *Entry {
+type GetBuilder struct {
+	Instance *Instance
+	Request  *recordpb.GetRequest
+	TimeoutMillis int
+}
 
-	clientDeadline := time.Now().Add(time.Duration(timeoutMillis) * time.Millisecond)
-	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
-	defer cancel()
+func (t *GetBuilder) FileContents(include bool) *GetBuilder {
+	t.Request.FileContents = include
+	return t
+}
 
-	resp, err := clientList.Get(instance).Get(ctx, &recordpb.GetRequest{
-		Tenant:       tenant,
-		PrimaryKey:   key,
-		FileContents: fileContents,
-	})
+func (t *GetBuilder) Timeout(timeoutMillis int) *GetBuilder {
+	t.TimeoutMillis = timeoutMillis
+	return t
+}
+
+func (t *GetBuilder) ToEntry() (*Entry, error) {
+
+	if t.TimeoutMillis > 0 {
+
+		clientDeadline := time.Now().Add(time.Duration(t.TimeoutMillis) * time.Millisecond)
+		ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
+		defer cancel()
+
+		return t.doToEntry(ctx)
+
+	} else {
+		return t.doToEntry(context.Background())
+	}
+
+}
+
+func (t *GetBuilder) doToEntry(ctx context.Context) (*Entry, error) {
+
+	resp, err := t.Instance.Client.Get(ctx, t.Request)
 	if err != nil {
-		return &Entry {
-			Err: err,
-		}
+		return nil, err
 	}
 
 	m := make(map[string][]byte)
@@ -77,13 +152,10 @@ func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int)
 	}
 
 	return &Entry {
-		Err: err,
 		Columns:  m,
-	}
+	}, nil
 
 }
-
-
 
 
 
