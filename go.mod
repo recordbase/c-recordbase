@@ -1,4 +1,4 @@
-module github.com/recordbase/c-recordbase
+module github.com/recordbase/crecordbase
 
 go 1.17
 
