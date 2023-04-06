@@ -49,27 +49,38 @@ func Close(instance int) error {
 	return clientList.Remove(instance).Destroy()
 }
 
-func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int) map[string]interface{} {
+type Entry struct {
+	Err      error
+	Columns  map[string][]byte
+}
+
+func Get(instance int, tenant, key string, fileContents bool, timeoutMillis int) *Entry {
 
 	clientDeadline := time.Now().Add(time.Duration(timeoutMillis) * time.Millisecond)
 	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
 	defer cancel()
 
-	entry, err := clientList.Get(instance).Get(ctx, &recordpb.GetRequest{
+	resp, err := clientList.Get(instance).Get(ctx, &recordpb.GetRequest{
 		Tenant:       tenant,
 		PrimaryKey:   key,
 		FileContents: fileContents,
 	})
 	if err != nil {
-		return nil
+		return &Entry {
+			Err: err,
+		}
 	}
 
-	resp := make(map[string]interface{})
-	for _, col := range entry.Columns {
-		resp[col.Name] = string(col.Value)
+	m := make(map[string][]byte)
+	for _, entry := range resp.Columns {
+		m[entry.Name] = entry.Value
 	}
 
-	return resp
+	return &Entry {
+		Err: err,
+		Columns:  m,
+	}
+
 }
 
 
