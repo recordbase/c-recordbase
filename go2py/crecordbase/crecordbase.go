@@ -51,8 +51,11 @@ static inline void gopy_err_handle() {
 import "C"
 import (
 	"errors"
+	"unsafe"
 
 	"github.com/go-python/gopy/gopyh" // handler
+
+	"github.com/recordbase/crecordbase"
 )
 
 // main doesn't do anything in lib / pkg mode, but is essential for exe mode
@@ -1075,4 +1078,136 @@ func Slice_uint8_set(handle CGoHandle, _idx int, _vl C.uchar) {
 func Slice_uint8_append(handle CGoHandle, _vl C.uchar) {
 	s := ptrFromHandle_Slice_uint8(handle)
 	*s = append(*s, uint8(_vl))
+}
+
+// ---- Package: crecordbase ---
+
+// ---- Types ---
+
+// Converters for implicit pointer handles for type: map[string]string
+func ptrFromHandle_Map_string_string(h CGoHandle) *map[string]string {
+	p := gopyh.VarFromHandle((gopyh.CGoHandle)(h), "map[string]string")
+	if p == nil {
+		return nil
+	}
+	return p.(*map[string]string)
+}
+func deptrFromHandle_Map_string_string(h CGoHandle) map[string]string {
+	p := ptrFromHandle_Map_string_string(h)
+	if p == nil {
+		return nil
+	}
+	return *p
+}
+func handleFromPtr_Map_string_string(p interface{}) CGoHandle {
+	return CGoHandle(gopyh.Register("map[string]string", p))
+}
+
+// --- wrapping map: map[string]string ---
+//export Map_string_string_CTor
+func Map_string_string_CTor() CGoHandle {
+	return CGoHandle(handleFromPtr_Map_string_string(&map[string]string{}))
+}
+
+//export Map_string_string_len
+func Map_string_string_len(handle CGoHandle) int {
+	return len(deptrFromHandle_Map_string_string(handle))
+}
+
+//export Map_string_string_elem
+func Map_string_string_elem(handle CGoHandle, _ky *C.char) *C.char {
+	s := deptrFromHandle_Map_string_string(handle)
+	v, ok := s[C.GoString(_ky)]
+	if !ok {
+		C.PyErr_SetString(C.PyExc_KeyError, C.CString("key not in map"))
+	}
+	return C.CString(v)
+}
+
+//export Map_string_string_contains
+func Map_string_string_contains(handle CGoHandle, _ky *C.char) C.char {
+	s := deptrFromHandle_Map_string_string(handle)
+	_, ok := s[C.GoString(_ky)]
+	return boolGoToPy(ok)
+}
+
+//export Map_string_string_set
+func Map_string_string_set(handle CGoHandle, _ky *C.char, _vl *C.char) {
+	s := deptrFromHandle_Map_string_string(handle)
+	s[C.GoString(_ky)] = C.GoString(_vl)
+}
+
+//export Map_string_string_delete
+func Map_string_string_delete(handle CGoHandle, _ky *C.char) {
+	s := deptrFromHandle_Map_string_string(handle)
+	delete(s, C.GoString(_ky))
+}
+
+//export Map_string_string_keys
+func Map_string_string_keys(handle CGoHandle) CGoHandle {
+	s := deptrFromHandle_Map_string_string(handle)
+	kys := make([]string, 0, len(s))
+	for k := range s {
+		kys = append(kys, k)
+	}
+	return handleFromPtr_Slice_string(&kys)
+}
+
+// ---- Global Variables: can only use functions to access ---
+
+// ---- Interfaces ---
+
+// ---- Structs ---
+
+// ---- Slices ---
+
+// ---- Maps ---
+
+// ---- Constructors ---
+
+// ---- Functions ---
+
+//export crecordbase_Get
+func crecordbase_Get(instance C.longlong, tenant *C.char, key *C.char, fileContents C.char, timeoutMillis C.longlong) CGoHandle {
+	_saved_thread := C.PyEval_SaveThread()
+	cret, __err := crecordbase.Get(int(instance), C.GoString(tenant), C.GoString(key), boolPyToGo(fileContents), int(timeoutMillis))
+
+	C.PyEval_RestoreThread(_saved_thread)
+	if __err != nil {
+		estr := C.CString(__err.Error())
+		C.PyErr_SetString(C.PyExc_RuntimeError, estr)
+		C.free(unsafe.Pointer(estr))
+		return handleFromPtr_Map_string_string(nil)
+	}
+	return handleFromPtr_Map_string_string(&cret)
+}
+
+//export crecordbase_Close
+func crecordbase_Close(instance C.longlong) *C.char {
+	_saved_thread := C.PyEval_SaveThread()
+	var __err error
+	__err = crecordbase.Close(int(instance))
+
+	C.PyEval_RestoreThread(_saved_thread)
+	if __err != nil {
+		estr := C.CString(__err.Error())
+		C.PyErr_SetString(C.PyExc_RuntimeError, estr)
+		return estr
+	}
+	return C.CString("")
+}
+
+//export crecordbase_Connect
+func crecordbase_Connect(commaSeparatedEndpoints *C.char, token *C.char, withTls C.char, timeoutMillis C.longlong) C.longlong {
+	_saved_thread := C.PyEval_SaveThread()
+	cret, __err := crecordbase.Connect(C.GoString(commaSeparatedEndpoints), C.GoString(token), boolPyToGo(withTls), int(timeoutMillis))
+
+	C.PyEval_RestoreThread(_saved_thread)
+	if __err != nil {
+		estr := C.CString(__err.Error())
+		C.PyErr_SetString(C.PyExc_RuntimeError, estr)
+		C.free(unsafe.Pointer(estr))
+		return C.longlong(0)
+	}
+	return C.longlong(cret)
 }

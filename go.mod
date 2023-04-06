@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/go-python/gopy v0.4.6
 	github.com/recordbase/recordbase v1.0.1
+	github.com/recordbase/recordpb v1.0.2
 )
 
 require (
@@ -16,7 +17,6 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/recordbase/recordpb v1.0.2 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect

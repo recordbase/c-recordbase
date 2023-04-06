@@ -2000,6 +2000,206 @@ _wrap__crecordbase_Slice_uint8_append(PyObject * PYBINDGEN_UNUSED(dummy), PyObje
 }
 PyObject * _wrap__crecordbase_Slice_uint8_append(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
 
+
+PyObject *
+_wrap__crecordbase_Map_string_string_CTor(PyObject *PYBINDGEN_UNUSED(_args), PyObject *PYBINDGEN_UNUSED(_kwargs))
+{
+    PyObject *py_retval;
+    int64_t retval;
+
+    retval = Map_string_string_CTor();
+    py_retval = Py_BuildValue((char *) "L", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_CTor(PyObject *PYBINDGEN_UNUSED(_args), PyObject *PYBINDGEN_UNUSED(_kwargs));
+
+
+PyObject *
+_wrap__crecordbase_Map_string_string_len(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int retval;
+    int64_t handle;
+    const char *keywords[] = {"handle", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "L", (char **) keywords, &handle)) {
+        return NULL;
+    }
+    retval = Map_string_string_len(handle);
+    py_retval = Py_BuildValue((char *) "i", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_len(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_Map_string_string_elem(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    char *retval;
+    int64_t handle;
+    char *_ky;
+    const char *keywords[] = {"handle", "_ky", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "Ls", (char **) keywords, &handle, &_ky)) {
+        return NULL;
+    }
+    retval = Map_string_string_elem(handle, _ky);
+    py_retval = Py_BuildValue((char *) "s", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_elem(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_Map_string_string_contains(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    bool retval;
+    int64_t handle;
+    char *_ky;
+    const char *keywords[] = {"handle", "_ky", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "Ls", (char **) keywords, &handle, &_ky)) {
+        return NULL;
+    }
+    retval = Map_string_string_contains(handle, _ky);
+    py_retval = Py_BuildValue((char *) "N", PyBool_FromLong(retval));
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_contains(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_Map_string_string_set(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int64_t handle;
+    char *key;
+    char *value;
+    const char *keywords[] = {"handle", "key", "value", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "Lss", (char **) keywords, &handle, &key, &value)) {
+        return NULL;
+    }
+    Map_string_string_set(handle, key, value);
+    Py_INCREF(Py_None);
+    py_retval = Py_None;
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_set(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_Map_string_string_delete(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int64_t handle;
+    char *_ky;
+    const char *keywords[] = {"handle", "_ky", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "Ls", (char **) keywords, &handle, &_ky)) {
+        return NULL;
+    }
+    Map_string_string_delete(handle, _ky);
+    Py_INCREF(Py_None);
+    py_retval = Py_None;
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_delete(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_Map_string_string_keys(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int64_t retval;
+    int64_t handle;
+    const char *keywords[] = {"handle", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "L", (char **) keywords, &handle)) {
+        return NULL;
+    }
+    retval = Map_string_string_keys(handle);
+    py_retval = Py_BuildValue((char *) "L", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_Map_string_string_keys(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_crecordbase_Get(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int64_t retval;
+    int64_t instance;
+    char *tenant;
+    char *key;
+    bool fileContents;
+    PyObject *py_fileContents;
+    int64_t timeoutMillis;
+    const char *keywords[] = {"instance", "tenant", "key", "fileContents", "timeoutMillis", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "LssOL", (char **) keywords, &instance, &tenant, &key, &py_fileContents, &timeoutMillis)) {
+        return NULL;
+    }
+    fileContents = (bool) PyObject_IsTrue(py_fileContents);
+    retval = crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis);
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+    py_retval = Py_BuildValue((char *) "L", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_crecordbase_Get(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_crecordbase_Close(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    char *retval;
+    int64_t instance;
+    const char *keywords[] = {"instance", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "L", (char **) keywords, &instance)) {
+        return NULL;
+    }
+    retval = crecordbase_Close(instance);
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+    py_retval = Py_BuildValue((char *) "s", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_crecordbase_Close(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
+
+PyObject *
+_wrap__crecordbase_crecordbase_Connect(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_retval;
+    int64_t retval;
+    char *commaSeparatedEndpoints;
+    char *token;
+    bool withTls;
+    PyObject *py_withTls;
+    int64_t timeoutMillis;
+    const char *keywords[] = {"commaSeparatedEndpoints", "token", "withTls", "timeoutMillis", NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "ssOL", (char **) keywords, &commaSeparatedEndpoints, &token, &py_withTls, &timeoutMillis)) {
+        return NULL;
+    }
+    withTls = (bool) PyObject_IsTrue(py_withTls);
+    retval = crecordbase_Connect(commaSeparatedEndpoints, token, withTls, timeoutMillis);
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+    py_retval = Py_BuildValue((char *) "L", retval);
+    return py_retval;
+}
+PyObject * _wrap__crecordbase_crecordbase_Connect(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs);
+
 static PyMethodDef _crecordbase_functions[] = {
     {(char *) "GoPyInit", (PyCFunction) _wrap__crecordbase_GoPyInit, METH_NOARGS, "GoPyInit()\n\n" },
     {(char *) "DecRef", (PyCFunction) _wrap__crecordbase_DecRef, METH_KEYWORDS|METH_VARARGS, "DecRef(handle)\n\ntype: handle: int64_t" },
@@ -2107,6 +2307,16 @@ static PyMethodDef _crecordbase_functions[] = {
     {(char *) "Slice_uint8_subslice", (PyCFunction) _wrap__crecordbase_Slice_uint8_subslice, METH_KEYWORDS|METH_VARARGS, "Slice_uint8_subslice(handle, st, ed)\n\ntype: handle: int64_t\ntype: st: int\ntype: ed: int" },
     {(char *) "Slice_uint8_set", (PyCFunction) _wrap__crecordbase_Slice_uint8_set, METH_KEYWORDS|METH_VARARGS, "Slice_uint8_set(handle, idx, value)\n\ntype: handle: int64_t\ntype: idx: int\ntype: value: uint8_t" },
     {(char *) "Slice_uint8_append", (PyCFunction) _wrap__crecordbase_Slice_uint8_append, METH_KEYWORDS|METH_VARARGS, "Slice_uint8_append(handle, value)\n\ntype: handle: int64_t\ntype: value: uint8_t" },
+    {(char *) "Map_string_string_CTor", (PyCFunction) _wrap__crecordbase_Map_string_string_CTor, METH_NOARGS, "Map_string_string_CTor()\n\n" },
+    {(char *) "Map_string_string_len", (PyCFunction) _wrap__crecordbase_Map_string_string_len, METH_KEYWORDS|METH_VARARGS, "Map_string_string_len(handle)\n\ntype: handle: int64_t" },
+    {(char *) "Map_string_string_elem", (PyCFunction) _wrap__crecordbase_Map_string_string_elem, METH_KEYWORDS|METH_VARARGS, "Map_string_string_elem(handle, _ky)\n\ntype: handle: int64_t\ntype: _ky: char *" },
+    {(char *) "Map_string_string_contains", (PyCFunction) _wrap__crecordbase_Map_string_string_contains, METH_KEYWORDS|METH_VARARGS, "Map_string_string_contains(handle, _ky)\n\ntype: handle: int64_t\ntype: _ky: char *" },
+    {(char *) "Map_string_string_set", (PyCFunction) _wrap__crecordbase_Map_string_string_set, METH_KEYWORDS|METH_VARARGS, "Map_string_string_set(handle, key, value)\n\ntype: handle: int64_t\ntype: key: char *\ntype: value: char *" },
+    {(char *) "Map_string_string_delete", (PyCFunction) _wrap__crecordbase_Map_string_string_delete, METH_KEYWORDS|METH_VARARGS, "Map_string_string_delete(handle, _ky)\n\ntype: handle: int64_t\ntype: _ky: char *" },
+    {(char *) "Map_string_string_keys", (PyCFunction) _wrap__crecordbase_Map_string_string_keys, METH_KEYWORDS|METH_VARARGS, "Map_string_string_keys(handle)\n\ntype: handle: int64_t" },
+    {(char *) "crecordbase_Get", (PyCFunction) _wrap__crecordbase_crecordbase_Get, METH_KEYWORDS|METH_VARARGS, "crecordbase_Get(instance, tenant, key, fileContents, timeoutMillis)\n\ntype: instance: int64_t\ntype: tenant: char *\ntype: key: char *\ntype: fileContents: bool\ntype: timeoutMillis: int64_t" },
+    {(char *) "crecordbase_Close", (PyCFunction) _wrap__crecordbase_crecordbase_Close, METH_KEYWORDS|METH_VARARGS, "crecordbase_Close(instance)\n\ntype: instance: int64_t" },
+    {(char *) "crecordbase_Connect", (PyCFunction) _wrap__crecordbase_crecordbase_Connect, METH_KEYWORDS|METH_VARARGS, "crecordbase_Connect(commaSeparatedEndpoints, token, withTls, timeoutMillis)\n\ntype: commaSeparatedEndpoints: char *\ntype: token: char *\ntype: withTls: bool\ntype: timeoutMillis: int64_t" },
     {NULL, NULL, 0, NULL}
 };
 #if PY_VERSION_HEX >= 0x03000000
