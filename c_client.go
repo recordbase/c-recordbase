@@ -1,15 +1,5 @@
 /*
- * Copyright (c) 2022-2023 Zander Schwid & Co. LLC.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Copyright (c) 2022-2023 Zander Schwid & Co. LLC. All rights reserved.
  */
 
 package crecordbase
@@ -113,11 +103,6 @@ type GetBuilder struct {
 	TimeoutMillis int
 }
 
-func (t *GetBuilder) FileContents(include bool) *GetBuilder {
-	t.Request.FileContents = include
-	return t
-}
-
 func (t *GetBuilder) Timeout(timeoutMillis int) *GetBuilder {
 	t.TimeoutMillis = timeoutMillis
 	return t
@@ -147,7 +132,7 @@ func (t *GetBuilder) doToEntry(ctx context.Context) (*Entry, error) {
 	}
 
 	m := make(map[string][]byte)
-	for _, entry := range resp.Columns {
+	for _, entry := range resp.Bins {
 		m[entry.Name] = entry.Value
 	}
 
